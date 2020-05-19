@@ -1,0 +1,27 @@
+---
+version: "2.1"
+services:
+  transmission:
+    image: linuxserver/transmission
+    container_name: transmission
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Asia/Shanghai
+    volumes:
+      - D:\transmission\data:/config
+      - D:\transmission\downloads:/downloads
+      - D:\transmission\watch:/watch
+    ports:
+      - 9091:9091
+      - 51413:51413
+      - 51413:51413/udp
+    restart: unless-stopped
+  trackers:
+    image: andrewmhub/transmission-tracker-add
+    container_name: transmission-tracker-add
+    environment:
+      - HOSTPORT=localhost:9091
+      - TR_AUTH=user:password
+      - TORRENTLIST=https://ngosang.github.io/trackerslist/trackers_best.txt
+    restart: unless-stopped
