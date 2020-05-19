@@ -8,6 +8,8 @@ services:
       - PUID=1000
       - PGID=1000
       - TZ=Asia/Shanghai
+      - USER=user
+      - PASS=password
     volumes:
       - D:\transmission\data:/config
       - D:\transmission\downloads:/downloads
@@ -17,6 +19,10 @@ services:
       - 51413:51413
       - 51413:51413/udp
     restart: unless-stopped
+    networks:
+      net:
+        aliases:
+          - transmission
   trackers:
     image: andrewmhub/transmission-tracker-add
     container_name: transmission-tracker-add
@@ -25,4 +31,7 @@ services:
       - TR_AUTH=user:password
       - TORRENTLIST=https://ngosang.github.io/trackerslist/trackers_best.txt
     restart: unless-stopped
-    network_mode: host
+    networks:
+      - net
+networks:
+  net:
