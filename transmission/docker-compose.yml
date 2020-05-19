@@ -25,3 +25,4 @@ services:
       - TR_AUTH=user:password
       - TORRENTLIST=https://ngosang.github.io/trackerslist/trackers_best.txt
     restart: unless-stopped
+    network_mode: host
